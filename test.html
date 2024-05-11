@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>UPLOAD IMAGE</h1>
+
+
+    <form  id="mainForm">
+        <input type="file" name="image" id="file">
+        <input type="text" name="name">
+        <input type="submit">
+    </form>
+
+    <div style="width: 500px; height: 500px; background-color: blue;">
+        <img id="imgTest" style="height: 100%; width: 100%;">
+    </div>
+
+</body>
+
+</html>
+
+<script>
+        const test = async () => {
+
+            const req = new Request('http://localhost:7000/api', {
+                method : 'GET',
+                headers: {
+                    'content-type' : 'application/json'
+                }
+            })
+            
+            fetch(req)
+            .then(res => {
+                if(!res.ok) throw new Error("INVALID")
+                return res.json()
+            })
+            .then(data => {
+        
+                const values = Object.values(data);
+                // values.map(element => console.log(element))
+
+                let imgTest = document.querySelector('#imgTest')
+                imgTest.src=values[2]
+                
+                 
+            })
+            .catch(console.warn)
+
+        }
+
+    test()
+</script>
